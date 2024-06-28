@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+
+::view-transition-group(header) {
+  @apply z-10;
+}
+
+button[data-sorting-field='active']::after {
+  content: '';
+  @apply absolute left-0 top-0 -z-10 h-full w-full rounded-md bg-blue-700;
+  view-transition-name: sorting-field-indicator;
+}
+
+::view-transition-new(sorting-field-indicator),
+::view-transition-old(sorting-field-indicator) {
+  @apply absolute left-0 top-0 -z-10 h-full w-full;
+}
+
+header {
+  animation: header-appear linear forwards;
+  animation-timeline: scroll(root block);
+  animation-range: 10vh 50vh;
+}
+
+@keyframes header-appear {
+  to {
+    @apply px-0 backdrop-blur-sm;
+  }
+}
