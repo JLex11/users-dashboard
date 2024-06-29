@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useUsers } from '../hooks/useUsers'
 import { getUsers } from '../services/getUsers'
 import { withTransition } from '../utils'
@@ -12,10 +11,9 @@ import UsersTable from './UsersTable'
 import MoreButton from './icons/MoreButton'
 
 export default function UsersDashboard() {
-  const { users, isError, isLoading, deleteUser, restoreUsers, loadMoreUsers, filters } = useUsers({ usersFn: getUsers })
+  const { users, isError, isLoading, deleteUser, restoreUsers, loadMoreUsers, filters, pagination } = useUsers({ usersFn: getUsers })
   const { sorting, setSorting, showRowColor, setShowRowColor, sortDirection, toggleSortDirection, setCountryQuery } = filters
-
-  const [currentPage, setCurrentPage] = useState(1)
+  const { totalPages, currentPage, setCurrentPage } = pagination
 
   return (
     <main className="flex w-full flex-col gap-2 p-2">
@@ -31,7 +29,7 @@ export default function UsersDashboard() {
           <div>{isError && <p className="rounded bg-black/5 p-2 text-red-500">Ups, parece que algo salio mal.</p>}</div>
           <TablePagination
             currentPage={currentPage}
-            totalPages={10}
+            totalPages={totalPages}
             disabled={isLoading}
             handlePageChange={(page: number) => withTransition(() => setCurrentPage(page))}
           />
