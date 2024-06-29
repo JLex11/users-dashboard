@@ -2,9 +2,8 @@ import { useRef } from 'react'
 import { SortDirection, SortField } from '../types.d'
 import { withTransition } from '../utils'
 import HeaderButton from './HeaderButton'
-import ArrowShuffle from './icons/ArrowShuffle'
-import SortAscending from './icons/SortAscending'
-import SortDescending from './icons/SortDescending'
+import ArrowShuffleIcon from './icons/ArrowShuffleIcon'
+import SortIcon from './icons/SortIcon'
 
 interface Props {
   sorting: SortField
@@ -28,7 +27,14 @@ export default function SortDirectionButton({ sorting, sortDirection, toggleSort
   return (
     <HeaderButton isActive={sorting !== SortField.NONE} onClick={() => handleChangeSortDirection()}>
       <span className="flex items-center gap-1">
-        {sorting !== SortField.NONE ? sortDirection === SortDirection.ASC ? <SortAscending /> : <SortDescending /> : <ArrowShuffle />}
+        {sorting !== SortField.NONE ? (
+          <SortIcon
+            direction={sortDirection}
+            /* className={clsx('transition-transform', sortDirection === SortDirection.ASC && 'rotate-y-180 rotate-x-180')} */
+          />
+        ) : (
+          <ArrowShuffleIcon />
+        )}
       </span>
     </HeaderButton>
   )
