@@ -13,7 +13,7 @@ interface Props {
 
 export default function UsersTable({ users, showingRowColor, sorting, deleteUser, changeSorting }: Props) {
   return (
-    <table className="table-auto border-separate border-spacing-0 rounded-md border text-left shadow-sm dark:border-white/15">
+    <table className="table-auto border-separate border-spacing-0 rounded-md border p-2 text-left shadow-sm dark:border-white/15">
       <Thead sorting={sorting} changeSorting={changeSorting} />
       <Tbody users={users} showingRowColor={showingRowColor} deleteUser={deleteUser} />
     </table>
@@ -24,7 +24,7 @@ function Thead({ sorting, changeSorting }: Pick<Props, 'sorting' | 'changeSortin
   return (
     <thead className="border dark:border-white/15">
       <tr>
-        <th className="w-20 border-b p-4 dark:border-white/15">Foto</th>
+        <th className="w-20 border-b px-2 pb-3 pt-1 dark:border-white/15">Foto</th>
         <SortableField isActive={sorting === SortField.NAME} handleClick={() => changeSorting(SortField.NAME)}>
           Nombre
         </SortableField>
@@ -34,7 +34,7 @@ function Thead({ sorting, changeSorting }: Pick<Props, 'sorting' | 'changeSortin
         <SortableField isActive={sorting === SortField.COUNTRY} handleClick={() => changeSorting(SortField.COUNTRY)}>
           Pais
         </SortableField>
-        <th className="border-b border-black/15 p-4 dark:border-white/15"></th>
+        <th className="border-b border-black/15 px-2 pb-3 pt-1 dark:border-white/15"></th>
       </tr>
     </thead>
   )
@@ -57,7 +57,7 @@ function Tbody({ users, showingRowColor, deleteUser }: Pick<Props, 'users' | 'sh
           style={{ viewTransitionName: `table-row-${user.login.uuid}`, animationDelay: `${getAnimationDelay(i)}s` }}
           className={`animate-appear opacity-0 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
         >
-          <td className="w-20 p-4">
+          <td className="w-20 p-2">
             <img
               src={user.picture.thumbnail}
               alt={user.name.first}
@@ -66,14 +66,14 @@ function Tbody({ users, showingRowColor, deleteUser }: Pick<Props, 'users' | 'sh
               decoding="async"
             />
           </td>
-          <td className="p-4">
+          <td className="p-2">
             {user.name.first} {user.name.last}
           </td>
-          <td className="p-4">{user.name.last}</td>
-          <td className="p-4">{user.location.country}</td>
-          <td className="w-36 p-4 text-right">
+          <td className="p-2">{user.name.last}</td>
+          <td className="p-2">{user.location.country}</td>
+          <td className="w-36 p-2 text-right">
             <button
-              className="rounded bg-black/5 px-4 py-2 font-bold transition-colors hover:bg-red-700 hover:text-white dark:bg-white/5 dark:text-white"
+              className="rounded bg-black/5 px-2 py-1 font-bold transition-colors hover:bg-red-700 hover:text-white dark:bg-white/5 dark:text-white"
               onClick={() => withTransition(() => deleteUser(user.login.uuid))}
             >
               Eliminar
