@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { SortField, User } from '../types.d'
 import { withTransition } from '../utils'
 import SortableField from './SortableField'
@@ -40,13 +41,21 @@ function Thead({ sorting, changeSorting }: Pick<Props, 'sorting' | 'changeSortin
 }
 
 function Tbody({ users, showingRowColor, deleteUser }: Pick<Props, 'users' | 'showingRowColor' | 'deleteUser'>) {
+  const lastUsersCount = useRef(Math.random())
+
+  useEffect(() => {
+    lastUsersCount.current = users.length
+  })
+
+  const getAnimationDelay = (i: number) => Math.max(0, (i - lastUsersCount.current) * 0.1)
+
   return (
     <tbody>
-      {users.map((user) => (
+      {users.map((user, i) => (
         <tr
           key={user.login.uuid}
-          style={{ viewTransitionName: `table-row-${user.login.uuid}` }}
-          className={`transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
+          style={{ viewTransitionName: `table-row-${user.login.uuid}`, animationDelay: `${getAnimationDelay(i)}s` }}
+          className={`animate-pulse-in transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
         >
           <td className="w-20 p-4">
             <img
