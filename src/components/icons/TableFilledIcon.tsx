@@ -1,4 +1,4 @@
-export default function TableFilledIcon({ ...props }) {
+export default function TableFilledIcon({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -7,6 +7,9 @@ export default function TableFilledIcon({ ...props }) {
       height="24"
       viewBox="0 0 24 24"
       fill="currentColor"
+      strokeWidth="0"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M4 11h4a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-2a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-6a1 1 0 0 1 1 -1z" />

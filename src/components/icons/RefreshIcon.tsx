@@ -1,4 +1,4 @@
-export default function RefreshIcon({ ...props }) {
+export default function RefreshIcon({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

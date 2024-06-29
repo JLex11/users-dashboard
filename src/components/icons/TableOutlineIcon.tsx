@@ -1,4 +1,4 @@
-export default function TableOutlineIcon({ ...props }) {
+export default function TableOutlineIcon({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

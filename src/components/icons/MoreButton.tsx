@@ -1,4 +1,4 @@
-export default function MoreButton({ ...props }) {
+export default function MoreButton({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

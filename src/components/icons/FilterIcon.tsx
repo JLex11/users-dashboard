@@ -1,4 +1,4 @@
-export default function FilterIcon({ ...props }) {
+export default function FilterIcon({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
