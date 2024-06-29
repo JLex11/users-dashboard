@@ -5,9 +5,10 @@ import { matchSort } from '../utils'
 
 interface Props {
   usersFn: ({ page }: { page: number }) => Promise<{ users: User[]; nextPage: number }>
+  usersPerPage?: number
 }
 
-export const useUsers = ({ usersFn }: Props) => {
+export const useUsers = ({ usersFn, usersPerPage = 5 }: Props) => {
   const { data, isError, isFetchNextPageError, isLoading, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['users'],
     queryFn: ({ pageParam }) => usersFn({ page: pageParam }),
@@ -21,6 +22,7 @@ export const useUsers = ({ usersFn }: Props) => {
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.ASC)
   const [showRowColor, setShowRowColor] = useState(false)
   const [countryQuery, setCountryQuery] = useState('')
+  const [currentPage, setCurrentPage] = useState(0)
 
   const originalUsers = useRef<User[]>([])
   const deletedUsersIds = useRef<User['login']['uuid'][]>([])
@@ -58,8 +60,19 @@ export const useUsers = ({ usersFn }: Props) => {
 
   const sortedUsers = useMemo(() => matchSort(sorting, sortDirection, filteredUsers), [sorting, sortDirection, filteredUsers])
 
+  const pageOffset = useMemo(() => Math.floor(currentPage * usersPerPage), [currentPage])
+  const totalPages = useMemo(() => Math.ceil(filteredUsers.length / usersPerPage), [filteredUsers])
+  const pageLimit = useMemo(() => Math.min(pageOffset + usersPerPage), [pageOffset])
+  console.log({ pageOffset, totalPages, pageLimit })
+
   return {
-    users: sortedUsers,
+    users: sortedUsers.slice(pageOffset, pageLimit),
+    pagination: {
+      totalPages,
+      pageLimit,
+      currentPage,
+      setCurrentPage
+    },
     isLoading: isLoading || isFetchingNextPage,
     isError: isError || isFetchNextPageError,
     loadMoreUsers: () => fetchNextPage(),
