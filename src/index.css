@@ -30,24 +30,36 @@
 
 button[data-sorting-field='active']::after {
   content: '';
-  @apply absolute left-0 top-0 -z-10 h-full w-full rounded-md bg-blue-700;
+  @apply absolute left-0 top-0 -z-10 size-full rounded-md bg-blue-700;
   view-transition-name: sorting-field-indicator;
 }
 
 ::view-transition-new(sorting-field-indicator),
 ::view-transition-old(sorting-field-indicator) {
-  @apply absolute left-0 top-0 -z-10 h-full w-full;
+  @apply absolute left-0 top-0 -z-10 size-full;
 }
 
-header {
+header,
+header::after {
   animation: header-appear linear forwards;
   animation-timeline: scroll(root block);
-  animation-range: 10vh 50vh;
+  animation-range: 15vh 25vh;
+}
+
+header::after {
+  content: '';
+  animation-name: header-after-appear;
+  @apply absolute -bottom-full left-0 -z-10 size-full bg-gradient-to-b from-white/60 via-white/60 to-transparent opacity-0 backdrop-blur-0 dark:from-[#242424cc] dark:via-[#242424cc];
 }
 
 @keyframes header-appear {
   to {
-    @apply px-0 backdrop-blur-sm;
+    @apply backdrop-blur-sm;
+  }
+}
+@keyframes header-after-appear {
+  to {
+    @apply opacity-100;
   }
 }
 
