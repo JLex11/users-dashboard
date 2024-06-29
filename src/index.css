@@ -50,3 +50,14 @@ header {
     @apply px-0 backdrop-blur-sm;
   }
 }
+
+.animate-pulse-in {
+  @apply opacity-0;
+  animation: pulse-in 0.65s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes pulse-in {
+  to {
+    opacity: 1;
+  }
+}
