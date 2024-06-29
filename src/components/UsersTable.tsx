@@ -55,7 +55,7 @@ function Tbody({ users, showingRowColor, deleteUser }: Pick<Props, 'users' | 'sh
         <tr
           key={user.login.uuid}
           style={{ viewTransitionName: `table-row-${user.login.uuid}`, animationDelay: `${getAnimationDelay(i)}s` }}
-          className={`animate-pulse-in transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
+          className={`animate-appear opacity-0 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
         >
           <td className="w-20 p-4">
             <img
