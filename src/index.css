@@ -51,12 +51,12 @@ header {
   }
 }
 
-.animate-pulse-in {
+.animate-appear {
   @apply opacity-0;
-  animation: pulse-in 0.65s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  animation: appear 0.65s cubic-bezier(0.4, 0, 0.6, 1) forwards;
 }
 
-@keyframes pulse-in {
+@keyframes appear {
   to {
     opacity: 1;
   }
