@@ -13,7 +13,7 @@ export default function SortableField({ isActive = false, handleClick, children 
   }
 
   return (
-    <th className="border-b px-2 pb-3 pt-1 dark:border-white/15" onClick={() => handleChangeSort()}>
+    <th className="w-1/4 border-b pb-3 pt-1 dark:border-white/15" onClick={() => handleChangeSort()}>
       <button
         data-sorting-field={isActive ? 'active' : ''}
         className={clsx(
