@@ -8,7 +8,7 @@ interface Props {
   usersPerPage?: number
 }
 
-export const useUsers = ({ usersFn, usersPerPage = 5 }: Props) => {
+export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
   const { data, isError, isFetchNextPageError, isLoading, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['users'],
     queryFn: ({ pageParam }) => usersFn({ page: pageParam }),
@@ -60,18 +60,18 @@ export const useUsers = ({ usersFn, usersPerPage = 5 }: Props) => {
 
   const sortedUsers = useMemo(() => matchSort(sorting, sortDirection, filteredUsers), [sorting, sortDirection, filteredUsers])
 
-  const pageOffset = useMemo(() => Math.floor(currentPage * usersPerPage), [currentPage])
+  const pageOffset = useMemo(() => Math.max(0, Math.floor(currentPage * usersPerPage) - users.length), [currentPage])
   const totalPages = useMemo(() => Math.ceil(filteredUsers.length / usersPerPage), [filteredUsers])
   const pageLimit = useMemo(() => Math.min(pageOffset + usersPerPage), [pageOffset])
-  console.log({ pageOffset, totalPages, pageLimit })
 
   return {
     users: sortedUsers.slice(pageOffset, pageLimit),
+    totalUsers: originalUsers.current.length,
     pagination: {
       totalPages,
       pageLimit,
       currentPage,
-      setCurrentPage
+      changePage: (page: number) => setCurrentPage(page)
     },
     isLoading: isLoading || isFetchingNextPage,
     isError: isError || isFetchNextPageError,
