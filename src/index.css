@@ -49,7 +49,7 @@ header::after {
 header::after {
   content: '';
   animation-name: header-after-appear;
-  @apply absolute -bottom-full left-0 -z-10 size-full bg-gradient-to-b from-white/60 via-white/60 to-transparent opacity-0 backdrop-blur-0 dark:from-[#242424cc] dark:via-[#242424cc];
+  @apply absolute -bottom-full left-0 -z-10 h-0 w-full bg-gradient-to-b from-white/60 via-white/60 to-transparent opacity-0 backdrop-blur-0 dark:from-[#242424cc] dark:via-[#242424cc];
 }
 
 @keyframes header-appear {
@@ -59,13 +59,13 @@ header::after {
 }
 @keyframes header-after-appear {
   to {
-    @apply opacity-100;
+    @apply h-full opacity-100;
   }
 }
 
 .animate-appear {
   @apply opacity-0;
-  animation: appear 0.65s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  animation: appear 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
 }
 
 @keyframes appear {
