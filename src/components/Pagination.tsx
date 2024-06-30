@@ -7,9 +7,11 @@ interface Props {
   totalPages: number
   disabled: boolean
   handlePageChange: (page: number) => void
+  prevPage?: () => void
+  nextPage?: () => void
 }
 
-export default function TablePagination({ currentPage, totalPages, disabled, handlePageChange }: Props) {
+export default function TablePagination({ currentPage, totalPages, disabled, handlePageChange, nextPage }: Props) {
   return (
     <>
       <Pagination
@@ -22,7 +24,7 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
         truncableText="..."
         truncableClassName="pointer-events-none"
       >
-        <Pagination.PrevButton className="flex items-center gap-1 rounded border border-black/10 px-3 py-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-white/5">
+        <Pagination.PrevButton className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5">
           <ChevronLeftIcon className="text-gray-600" />
           <span>Atras</span>
         </Pagination.PrevButton>
@@ -39,10 +41,14 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
           </ul>
         </nav>
 
-        <Pagination.NextButton className="flex items-center gap-1 rounded border border-black/10 px-3 py-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-white/5">
+        <button
+          disabled={disabled}
+          className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5"
+          onClick={nextPage}
+        >
           <span>Siguiente</span>
           <ChevronRightIcon className="text-gray-600" />
-        </Pagination.NextButton>
+        </button>
       </Pagination>
     </>
   )
