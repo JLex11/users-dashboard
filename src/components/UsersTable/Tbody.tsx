@@ -35,7 +35,7 @@ export default function Tbody({ users, showingRowColor, deleteUser }: Pick<Props
           <td className="p-2">{user.location.country}</td>
           <td className="p-2 text-right">
             <button
-              className="rounded px-2 py-1 font-bold transition-colors hover:bg-red-700 hover:text-white dark:text-white"
+              className="rounded bg-black/5 px-2 py-1 transition-colors hover:bg-red-700 hover:text-white dark:bg-white/5 dark:text-white"
               onClick={() => withTransition(() => deleteUser(user.login.uuid))}
             >
               Eliminar
