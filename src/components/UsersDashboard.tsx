@@ -10,7 +10,7 @@ import SortDirectionButton from './SortDirectionButton'
 import UsersTable from './UsersTable'
 
 export default function UsersDashboard() {
-  const { users, totalUsers, isError, isLoading, deleteUser, restoreUsers, loadMoreUsers, filters, pagination } = useUsers({ usersFn: getUsers })
+  const { users, totalUsers, isError, isLoading, deleteUser, restoreUsers, filters, pagination } = useUsers({ usersFn: getUsers })
   const { sorting, setSorting, showRowColor, setShowRowColor, sortDirection, toggleSortDirection, setCountryQuery } = filters
   const { totalPages, currentPage, changePage } = pagination
 
@@ -38,11 +38,7 @@ export default function UsersDashboard() {
               totalPages={totalPages}
               disabled={isLoading}
               handlePageChange={(page: number) => withTransition(() => changePage(page))}
-              nextPage={async () => {
-                const mustBeLoadMore = totalPages === currentPage + 1
-                if (mustBeLoadMore) await loadMoreUsers()
-                withTransition(() => changePage(currentPage + 1))
-              }}
+              nextPage={async () => withTransition(() => changePage(currentPage + 1))}
             />
             <div className="w-fit max-w-full text-ellipsis text-nowrap">
               {isError && <p className="rounded bg-black/5 p-2 text-red-500">Ups, parece que algo salio mal.</p>}

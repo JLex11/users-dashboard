@@ -52,7 +52,10 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
     deletedUsersIds.current = []
   }
 
-  const changeCountryQuery = (countryQuery: string) => setCountryQuery(countryQuery)
+  const changeCountryQuery = (countryQuery: string) => {
+    setCountryQuery(countryQuery)
+    setCurrentPage(0)
+  }
 
   const filteredUsers = useMemo(() => {
     return countryQuery.length === 0 ? users : users.filter(({ location }) => location.country.toLowerCase().includes(countryQuery.toLowerCase()))
@@ -60,22 +63,26 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
 
   const sortedUsers = useMemo(() => matchSort(sorting, sortDirection, filteredUsers), [sorting, sortDirection, filteredUsers])
 
-  const pageOffset = useMemo(() => Math.max(0, Math.floor(currentPage * usersPerPage) - users.length), [currentPage])
   const totalPages = useMemo(() => Math.ceil(filteredUsers.length / usersPerPage), [filteredUsers])
-  const pageLimit = useMemo(() => Math.min(pageOffset + usersPerPage), [pageOffset])
+  const pageOffset = useMemo(() => Math.floor(currentPage * usersPerPage), [currentPage])
+  const pageLimit = useMemo(() => Math.min(Math.ceil((currentPage + 1) * usersPerPage), filteredUsers.length), [currentPage, filteredUsers])
 
   return {
     users: sortedUsers.slice(pageOffset, pageLimit),
-    totalUsers: originalUsers.current.length,
+    totalUsers: filteredUsers.length,
     pagination: {
       totalPages,
       pageLimit,
       currentPage,
-      changePage: (page: number) => setCurrentPage(page)
+      changePage: async (page: number) => {
+        if (page > currentPage && pageLimit - pageOffset < usersPerPage) return fetchNextPage()
+        if (pageLimit - pageOffset < usersPerPage - currentPage * usersPerPage) return fetchNextPage()
+        setCurrentPage(page)
+      }
     },
     isLoading: isLoading || isFetchingNextPage,
     isError: isError || isFetchNextPageError,
-    loadMoreUsers: () => fetchNextPage(),
+    loadMoreUsers: fetchNextPage,
     deleteUser,
     restoreUsers,
     filters: {
