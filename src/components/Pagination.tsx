@@ -12,6 +12,8 @@ interface Props {
 }
 
 export default function TablePagination({ currentPage, totalPages, disabled, handlePageChange, nextPage }: Props) {
+  const isLastPage = totalPages === currentPage + 1
+
   return (
     <>
       <Pagination
@@ -46,7 +48,7 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
           className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5"
           onClick={nextPage}
         >
-          <span>Siguiente</span>
+          <span>{isLastPage ? 'Cargar más' : 'Siguiente'}</span>
           <ChevronRightIcon className="text-gray-600" />
         </button>
       </Pagination>
