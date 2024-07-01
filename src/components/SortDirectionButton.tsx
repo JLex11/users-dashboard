@@ -26,16 +26,7 @@ export default function SortDirectionButton({ sorting, sortDirection, toggleSort
 
   return (
     <HeaderButton isActive={sorting !== SortField.NONE} onClick={() => handleChangeSortDirection()}>
-      <span className="flex items-center gap-1">
-        {sorting !== SortField.NONE ? (
-          <SortIcon
-            direction={sortDirection}
-            /* className={clsx('transition-transform', sortDirection === SortDirection.ASC && 'rotate-y-180 rotate-x-180')} */
-          />
-        ) : (
-          <ArrowShuffleIcon />
-        )}
-      </span>
+      <span className="flex items-center gap-1">{sorting !== SortField.NONE ? <SortIcon direction={sortDirection} /> : <ArrowShuffleIcon />}</span>
     </HeaderButton>
   )
 }
