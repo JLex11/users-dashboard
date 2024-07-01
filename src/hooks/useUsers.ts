@@ -67,6 +67,16 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
   const pageOffset = useMemo(() => Math.floor(currentPage * usersPerPage), [currentPage])
   const pageLimit = useMemo(() => Math.min(Math.ceil((currentPage + 1) * usersPerPage), filteredUsers.length), [currentPage, filteredUsers])
 
+  const changePage = async (page: number) => {
+    if (page > currentPage && pageLimit - pageOffset < usersPerPage) return fetchNextPage()
+    if (pageLimit - pageOffset < usersPerPage - currentPage * usersPerPage) return fetchNextPage()
+    if (totalPages === page) {
+      await fetchNextPage()
+      return setCurrentPage(page)
+    }
+    setCurrentPage(page)
+  }
+
   return {
     users: sortedUsers.slice(pageOffset, pageLimit),
     totalUsers: filteredUsers.length,
@@ -74,11 +84,7 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
       totalPages,
       pageLimit,
       currentPage,
-      changePage: async (page: number) => {
-        if (page > currentPage && pageLimit - pageOffset < usersPerPage) return fetchNextPage()
-        if (pageLimit - pageOffset < usersPerPage - currentPage * usersPerPage) return fetchNextPage()
-        setCurrentPage(page)
-      }
+      changePage
     },
     isLoading: isLoading || isFetchingNextPage,
     isError: isError || isFetchNextPageError,
