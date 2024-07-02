@@ -12,9 +12,9 @@ export default function TRow({ user, showingRowColor, deleteUser, animationDelay
     <tr
       key={user.login.uuid}
       style={{ viewTransitionName: `table-row-${user.login.uuid}`, animationDelay: `${animationDelay}s` }}
-      className={`animate-appear opacity-0 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
+      className={`animate-appear group opacity-0 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${showingRowColor ? 'even:bg-black/[0.025] dark:even:bg-white/[0.025]' : ''}`}
     >
-      <td className="p-2">
+      <td className="rounded-l p-2 transition-colors group-hover:bg-black/5 dark:group-hover:bg-white/5">
         <img
           src={user.picture.thumbnail}
           alt={user.name.first}
@@ -23,12 +23,12 @@ export default function TRow({ user, showingRowColor, deleteUser, animationDelay
           decoding="async"
         />
       </td>
-      <td className="p-2">
+      <td className="p-2 transition-colors group-hover:bg-black/5 dark:group-hover:bg-white/5">
         {user.name.first} {user.name.last}
       </td>
-      <td className="p-2">{user.name.last}</td>
-      <td className="p-2">{user.location.country}</td>
-      <td className="p-2 text-right">
+      <td className="p-2 transition-colors group-hover:bg-black/5 dark:group-hover:bg-white/5">{user.name.last}</td>
+      <td className="p-2 transition-colors group-hover:bg-black/5 dark:group-hover:bg-white/5">{user.location.country}</td>
+      <td className="rounded-r p-2 text-right transition-colors group-hover:bg-black/5 dark:group-hover:bg-white/5">
         <button
           className="rounded bg-black/5 px-2 py-1 transition-colors hover:bg-red-700 hover:text-white dark:bg-white/5 dark:text-white"
           onClick={() => withTransition(() => deleteUser(user.login.uuid))}
