@@ -1,8 +1,10 @@
-import { Props } from '.'
-import { SortField } from '../../types.d'
-import SortableField from '../SortableField'
+import { SortField } from '@/types.d'
+import SortableField from './SortableField'
+import { Props } from './types'
 
-export default function Thead({ sorting, changeSorting }: Pick<Props, 'sorting' | 'changeSorting'>) {
+interface TheadProps extends Pick<Props, 'sorting' | 'changeSorting'> {}
+
+export default function Thead({ sorting, changeSorting }: TheadProps) {
   return (
     <thead className="border dark:border-white/15">
       <tr>
