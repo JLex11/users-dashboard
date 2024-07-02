@@ -1,9 +1,12 @@
+import { SortDirection, SortField } from '@/enums'
 import { flushSync } from 'react-dom'
-import { SortDirection, SortField, User } from './types.d'
+import { User } from './types.d'
 
 export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
 export const withTransition = (cb: () => void) => {
+  if (!('startViewTransition' in document)) return cb()
+
   document.startViewTransition(() => {
     flushSync(() => {
       cb()
