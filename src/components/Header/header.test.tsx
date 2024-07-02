@@ -29,12 +29,12 @@ describe('QueryInput', () => {
     screen.getByRole('textbox')
   })
 
-  it('must have a placeholder', () => {
+  it('should have a placeholder', () => {
     render(<QueryInput setCountryQuery={() => {}} />)
     screen.getByPlaceholderText('Netherlands, United Kingdom...')
   })
 
-  it('must have a onChange event', () => {
+  it('should have a onChange event', () => {
     const setCountryQuery = vi.fn()
     render(<QueryInput setCountryQuery={setCountryQuery} />)
 
@@ -94,7 +94,7 @@ describe('SortDirectionButton', () => {
     expect(toggleSortDirection).toHaveBeenCalled()
   })
 
-  it('must change the sorting when clicked and the previous sorting is not null', () => {
+  it('should change the sorting on click and when the previous sorting is not null', () => {
     const toggleSortDirection = vi.fn()
     const changeSorting = vi.fn()
     const { rerender } = render(
@@ -129,7 +129,7 @@ describe('ShowRowColorButton', () => {
     screen.getByTestId('row-color-icon')
   })
 
-  it('should change the showRowColor when clicked', () => {
+  it('should change the showRowColor on click', () => {
     const setShowRowColor = vi.fn()
     render(<ShowRowColorButton showRowColor={false} setShowRowColor={setShowRowColor} />)
 
