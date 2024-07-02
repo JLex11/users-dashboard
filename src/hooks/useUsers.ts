@@ -1,7 +1,8 @@
+import { SortDirection, SortField } from '@/enums'
+import { User } from '@/types.d'
+import { matchSort } from '@/utils'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { SortDirection, SortField, User } from '../types.d'
-import { matchSort } from '../utils'
 
 interface Props {
   usersFn: ({ page }: { page: number }) => Promise<{ users: User[]; nextPage: number }>

@@ -1,4 +1,4 @@
-import type { UsersApiResponse } from '../types.d'
+import { UsersApiResponse } from '../types.d'
 
 export interface GetUsersOptions {
   limit?: number

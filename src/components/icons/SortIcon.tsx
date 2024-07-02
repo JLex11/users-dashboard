@@ -1,4 +1,4 @@
-import { SortDirection } from '../../types.d'
+import { SortDirection } from '@/enums'
 
 interface Props extends React.SVGProps<SVGSVGElement> {
   direction?: SortDirection

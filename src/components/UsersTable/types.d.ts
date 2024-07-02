@@ -1,4 +1,5 @@
-import { SortField, User } from '@/types'
+import { SortField } from '@/enums'
+import { User } from '@/types'
 
 export interface Props {
   users: User[]
