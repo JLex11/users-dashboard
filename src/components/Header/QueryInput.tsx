@@ -1,4 +1,4 @@
-import { withTransition } from '../utils'
+import { withTransition } from '@/utils'
 
 interface Props {
   setCountryQuery: (countryQuery: string) => void

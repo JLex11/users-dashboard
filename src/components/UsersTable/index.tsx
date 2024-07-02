@@ -1,15 +1,6 @@
-import { SortField, User } from '../../types.d'
 import Tbody from './Tbody'
 import Thead from './Thead'
-
-export interface Props {
-  users: User[]
-  currentPage: number
-  showingRowColor: boolean
-  sorting: SortField
-  deleteUser: (userId: User['login']['uuid']) => void
-  changeSorting: (sorting: SortField) => void
-}
+import { Props } from './types'
 
 export default function UsersTable({ users, currentPage, showingRowColor, sorting, deleteUser, changeSorting }: Props) {
   return (

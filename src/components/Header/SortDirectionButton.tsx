@@ -1,9 +1,9 @@
+import ArrowShuffleIcon from '@/components/icons/ArrowShuffleIcon'
+import SortIcon from '@/components/icons/SortIcon'
+import { SortDirection, SortField } from '@/types.d'
+import { withTransition } from '@/utils'
 import { useRef } from 'react'
-import { SortDirection, SortField } from '../types.d'
-import { withTransition } from '../utils'
 import HeaderButton from './HeaderButton'
-import ArrowShuffleIcon from './icons/ArrowShuffleIcon'
-import SortIcon from './icons/SortIcon'
 
 interface Props {
   sorting: SortField

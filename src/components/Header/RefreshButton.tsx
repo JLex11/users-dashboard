@@ -1,7 +1,7 @@
+import RefreshIcon from '@/components/icons/RefreshIcon'
+import { withTransition } from '@/utils'
 import clsx from 'clsx'
-import { withTransition } from '../utils'
 import HeaderButton from './HeaderButton'
-import RefreshIcon from './icons/RefreshIcon'
 
 interface Props {
   refreshUsers: () => void

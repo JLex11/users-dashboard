@@ -1,6 +1,6 @@
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon'
+import ChevronRightIcon from '@/components/icons/ChevronRightIcon'
 import { Pagination } from 'react-headless-pagination'
-import ChevronLeftIcon from './icons/ChevronLeftIcon'
-import ChevronRightIcon from './icons/ChevronRightIcon'
 
 interface Props {
   currentPage: number
@@ -14,6 +14,14 @@ interface Props {
 export default function TablePagination({ currentPage, totalPages, disabled, handlePageChange, nextPage }: Props) {
   const isLastPage = totalPages === currentPage + 1
 
+  const getPageButtonProps = (page: number) => {
+    return {
+      style: {
+        viewTransitionName: `view-transition-pagination-page-${page}`
+      }
+    }
+  }
+
   return (
     <>
       <Pagination
@@ -24,7 +32,7 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
         middlePagesSiblingCount={1}
         className="flex items-center gap-2"
         truncableText="..."
-        truncableClassName="pointer-events-none"
+        truncableClassName="pointer-events-none flex items-end pt-4"
       >
         <Pagination.PrevButton className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5">
           <ChevronLeftIcon className="text-gray-600" />
@@ -34,11 +42,12 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
         <nav className="flex flex-grow justify-center">
           <ul className="flex items-start gap-2">
             <Pagination.PageButton
+              as={<button />}
               disabled={disabled}
-              activeClassName="text-white pointer-events-none relative bg-blue-500"
+              activeClassName="text-white pointer-events-none relative bg-blue-500 border-inherit"
               inactiveClassName="hover:bg-black/5 disabled:pointer-events-none transition-colors dark:hover:bg-white/5 cursor-pointer"
               className="rounded px-3 py-2"
-              renderExtraProps={(page: number) => ({ style: { viewTransitionName: `pagination-page-${page}` } })}
+              renderExtraProps={getPageButtonProps}
             />
           </ul>
         </nav>

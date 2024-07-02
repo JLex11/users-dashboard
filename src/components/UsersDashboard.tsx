@@ -1,13 +1,13 @@
-import { useUsers } from '../hooks/useUsers'
-import { getUsers } from '../services/getUsers'
-import { withTransition } from '../utils'
+import { useUsers } from '@/hooks/useUsers'
+import { getUsers } from '@/services/getUsers'
+import { withTransition } from '@/utils'
 import Header from './Header'
-import TablePagination from './Pagination'
-import QueryInput from './QueryInput'
-import RefreshButton from './RefreshButton'
-import ShowRowColorButton from './ShowRowColorButton'
-import SortDirectionButton from './SortDirectionButton'
+import QueryInput from './Header/QueryInput'
+import RefreshButton from './Header/RefreshButton'
+import ShowRowColorButton from './Header/ShowRowColorButton'
+import SortDirectionButton from './Header/SortDirectionButton'
 import UsersTable from './UsersTable'
+import TablePagination from './UsersTable/TablePagination'
 
 export default function UsersDashboard() {
   const { users, totalUsers, isError, isLoading, deleteUser, restoreUsers, filters, pagination } = useUsers({ usersFn: getUsers })
@@ -33,6 +33,7 @@ export default function UsersDashboard() {
         />
         <footer className="flex w-full flex-col gap-2">
           <div className="flex w-full justify-between gap-2">
+            <div></div>
             <TablePagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -40,9 +41,9 @@ export default function UsersDashboard() {
               handlePageChange={(page: number) => withTransition(() => changePage(page))}
               nextPage={async () => withTransition(() => changePage(currentPage + 1))}
             />
-            <div className="w-fit max-w-full text-ellipsis text-nowrap">
-              {isError && <p className="rounded bg-black/5 p-2 text-red-500">Ups, parece que algo salio mal.</p>}
-            </div>
+          </div>
+          <div className="w-full max-w-full text-ellipsis text-nowrap">
+            {isError && <p className="w-full rounded bg-black/5 p-2 text-red-500">Ups, parece que algo salio mal.</p>}
           </div>
         </footer>
       </section>

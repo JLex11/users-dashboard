@@ -1,6 +1,6 @@
+import TableFilledIcon from '@/components/icons/TableFilledIcon'
+import TableOutlineIcon from '@/components/icons/TableOutlineIcon'
 import HeaderButton from './HeaderButton'
-import TableFilledIcon from './icons/TableFilledIcon'
-import TableOutlineIcon from './icons/TableOutlineIcon'
 
 interface Props {
   showRowColor: boolean

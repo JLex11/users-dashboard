@@ -1,5 +1,5 @@
+import { withTransition } from '@/utils'
 import clsx from 'clsx'
-import { withTransition } from '../utils'
 
 interface Props {
   isActive?: boolean
