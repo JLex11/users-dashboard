@@ -43,7 +43,7 @@ header,
 header::after {
   animation: header-appear linear forwards;
   animation-timeline: scroll(root block);
-  animation-range: 15vh 25vh;
+  animation-range: 15vh 20vh;
 }
 
 header::after {
@@ -73,7 +73,7 @@ header::after {
 
 .animate-appear {
   @apply opacity-0;
-  animation: appear 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  animation: appear 0.5s cubic-bezier(0.4, 0, 0.6, 1) forwards;
 }
 
 @keyframes appear {
