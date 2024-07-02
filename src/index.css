@@ -47,9 +47,17 @@ header::after {
 }
 
 header::after {
+  --header-after-gradient: linear-gradient(to bottom, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.6), transparent);
   content: '';
   animation-name: header-after-appear;
-  @apply absolute -bottom-full left-0 -z-10 h-0 w-full bg-gradient-to-b from-white/60 via-white/60 to-transparent opacity-0 backdrop-blur-0 dark:from-[#242424cc] dark:via-[#242424cc];
+  @apply absolute -bottom-full left-0 -z-10 h-0 w-full;
+  background: var(--header-after-gradient);
+}
+
+@media (prefers-color-scheme: dark) {
+  header::after {
+    --header-after-gradient: linear-gradient(to bottom, #242424cc, #242424cc, transparent);
+  }
 }
 
 @keyframes header-appear {
