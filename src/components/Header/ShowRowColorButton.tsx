@@ -12,7 +12,7 @@ export default function ShowRowColorButton({ showRowColor, setShowRowColor }: Pr
 
   return (
     <HeaderButton isActive={showRowColor} onClick={handleShowingRowColor}>
-      {showRowColor ? <TableFilledIcon /> : <TableOutlineIcon />}
+      {showRowColor ? <TableFilledIcon data-testid="row-color-icon" /> : <TableOutlineIcon data-testid="row-color-icon" />}
     </HeaderButton>
   )
 }

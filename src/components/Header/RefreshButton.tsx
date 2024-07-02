@@ -13,7 +13,7 @@ export default function RefreshButton({ refreshUsers, loading = false }: Props) 
 
   return (
     <HeaderButton onClick={handleRefreshUsers}>
-      <RefreshIcon className={clsx({ 'animate-spin': loading })} />
+      <RefreshIcon className={clsx({ 'animate-spin': loading })} data-testid="refresh-icon" />
     </HeaderButton>
   )
 }

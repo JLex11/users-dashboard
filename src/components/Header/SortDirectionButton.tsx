@@ -1,6 +1,6 @@
 import ArrowShuffleIcon from '@/components/icons/ArrowShuffleIcon'
 import SortIcon from '@/components/icons/SortIcon'
-import { SortDirection, SortField } from '@/types.d'
+import { SortDirection, SortField } from '@/enums'
 import { withTransition } from '@/utils'
 import { useRef } from 'react'
 import HeaderButton from './HeaderButton'
@@ -26,7 +26,7 @@ export default function SortDirectionButton({ sorting, sortDirection, toggleSort
 
   return (
     <HeaderButton isActive={sorting !== SortField.NONE} onClick={() => handleChangeSortDirection()}>
-      <span className="flex items-center gap-1">{sorting !== SortField.NONE ? <SortIcon direction={sortDirection} /> : <ArrowShuffleIcon />}</span>
+      {sorting !== SortField.NONE ? <SortIcon direction={sortDirection} data-testid="sort-icon" /> : <ArrowShuffleIcon data-testid="sort-icon" />}
     </HeaderButton>
   )
 }
