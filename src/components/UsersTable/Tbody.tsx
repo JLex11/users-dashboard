@@ -5,13 +5,13 @@ import { Props } from './types'
 interface TbodyProps extends Pick<Props, 'users' | 'showingRowColor' | 'deleteUser'> {}
 
 export default function Tbody({ users, showingRowColor, deleteUser }: TbodyProps) {
-  const lastUsersCount = useRef(Math.random())
+  const lastUsersCount = useRef(0)
 
   useEffect(() => {
     lastUsersCount.current = users.length
   })
 
-  const getAnimationDelay = (i: number) => Math.max(0, (i - lastUsersCount.current) * 0.1)
+  const getAnimationDelay = (i: number) => Math.max(0, (i - lastUsersCount.current) * 0.05)
 
   return (
     <tbody>
