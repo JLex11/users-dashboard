@@ -1,4 +1,4 @@
-import { SortField } from '@/types.d'
+import { SortField } from '@/enums'
 import SortableField from './SortableField'
 import { Props } from './types'
 

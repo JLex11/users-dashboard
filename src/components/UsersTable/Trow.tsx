@@ -1,6 +1,6 @@
 import { User } from '@/types'
 import { withTransition } from '@/utils'
-import { Props } from './types'
+import { Props } from './types.d'
 
 interface TrowProps extends Pick<Props, 'showingRowColor' | 'deleteUser'> {
   user: User
