@@ -26,6 +26,7 @@ export default function UsersDashboard() {
         <UsersTable
           users={users}
           currentPage={currentPage}
+          loading={isLoading}
           showingRowColor={showRowColor}
           sorting={sorting}
           deleteUser={deleteUser}
