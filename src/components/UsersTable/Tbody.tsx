@@ -14,9 +14,9 @@ export default function Tbody({ users, showingRowColor, deleteUser }: TbodyProps
   const getAnimationDelay = (i: number) => Math.max(0, (i - lastUsersCount.current) * 0.05)
 
   return (
-    <tbody>
+    <tbody data-testid="table-body" role="rowgroup">
       {users.map((user, i) => (
-        <TRow user={user} animationDelay={getAnimationDelay(i)} showingRowColor={showingRowColor} deleteUser={deleteUser} />
+        <TRow key={user.login.uuid} user={user} animationDelay={getAnimationDelay(i)} showingRowColor={showingRowColor} deleteUser={deleteUser} />
       ))}
     </tbody>
   )

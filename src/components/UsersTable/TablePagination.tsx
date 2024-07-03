@@ -18,7 +18,8 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
     return {
       style: {
         viewTransitionName: `view-transition-pagination-page-${page}`
-      }
+      },
+      'aria-selected': page === currentPage
     }
   }
 
@@ -34,15 +35,18 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
         truncableText="..."
         truncableClassName="pointer-events-none flex items-end pt-4"
       >
-        <Pagination.PrevButton className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5">
+        <Pagination.PrevButton
+          role="button"
+          className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5"
+        >
           <ChevronLeftIcon className="text-gray-600" />
           <span>Atras</span>
         </Pagination.PrevButton>
 
-        <nav className="flex flex-grow justify-center">
+        <nav className="flex flex-grow justify-center" role="navigation">
           <ul className="flex items-start gap-2">
             <Pagination.PageButton
-              as={<button />}
+              as={<button role="tab" />}
               disabled={disabled}
               activeClassName="text-white pointer-events-none relative bg-blue-500 border-inherit"
               inactiveClassName="hover:bg-black/5 disabled:pointer-events-none transition-colors dark:hover:bg-white/5 cursor-pointer"
@@ -54,6 +58,7 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
 
         <button
           disabled={disabled}
+          role="button"
           className="flex items-center rounded border border-black/10 p-2 transition-colors hover:bg-black/5 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:hover:bg-white/5"
           onClick={nextPage}
         >
