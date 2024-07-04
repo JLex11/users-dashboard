@@ -47,27 +47,19 @@ header::after {
 }
 
 header::after {
-  --header-after-gradient: linear-gradient(to bottom, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.6), transparent);
   content: '';
   animation-name: header-after-appear;
-  @apply absolute -bottom-full left-0 -z-10 h-0 w-full;
-  background: var(--header-after-gradient);
-}
-
-@media (prefers-color-scheme: dark) {
-  header::after {
-    --header-after-gradient: linear-gradient(to bottom, #242424cc, #242424cc, transparent);
-  }
+  @apply absolute -bottom-full left-0 -z-10 h-0 w-full bg-white/60 dark:bg-[#242424cc];
 }
 
 @keyframes header-appear {
   to {
-    @apply backdrop-blur-sm;
+    @apply z-10 p-2 backdrop-blur-sm;
   }
 }
 @keyframes header-after-appear {
   to {
-    @apply h-full opacity-100;
+    @apply gradient-mask-b-0 h-full opacity-100;
   }
 }
 
@@ -80,4 +72,8 @@ header::after {
   to {
     opacity: 1;
   }
+}
+
+::view-transition-group(user-details-dialog) {
+  @apply fixed;
 }
