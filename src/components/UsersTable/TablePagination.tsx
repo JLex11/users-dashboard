@@ -1,17 +1,14 @@
 import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon'
 import ChevronRightIcon from '@/components/icons/ChevronRightIcon'
+import useUsersContext from '@/hooks/useUsersContext'
 import { Pagination } from 'react-headless-pagination'
 
-interface Props {
-  currentPage: number
-  totalPages: number
-  disabled: boolean
-  handlePageChange: (page: number) => void
-  prevPage?: () => void
-  nextPage?: () => void
-}
+export default function TablePagination() {
+  const { pagination, isLoading: disabled } = useUsersContext()
+  const { totalPages, currentPage, changePage } = pagination
 
-export default function TablePagination({ currentPage, totalPages, disabled, handlePageChange, nextPage }: Props) {
+  const nextPage = () => changePage(currentPage + 1)
+
   const isLastPage = totalPages === currentPage + 1
 
   const getPageButtonProps = (page: number) => {
@@ -27,7 +24,7 @@ export default function TablePagination({ currentPage, totalPages, disabled, han
     <>
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={handlePageChange}
+        setCurrentPage={changePage}
         totalPages={totalPages}
         edgePageCount={1}
         middlePagesSiblingCount={1}

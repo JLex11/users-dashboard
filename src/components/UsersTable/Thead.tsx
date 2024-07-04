@@ -1,10 +1,11 @@
 import { SortField } from '@/enums'
+import useUsersContext from '@/hooks/useUsersContext'
 import SortableField from './SortableField'
-import { Props } from './types'
 
-interface TheadProps extends Pick<Props, 'sorting' | 'changeSorting'> {}
+export default function Thead() {
+  const { filters } = useUsersContext()
+  const { sorting, setSorting: changeSorting } = filters
 
-export default function Thead({ sorting, changeSorting }: TheadProps) {
   return (
     <thead className="border dark:border-white/15" data-testid="table-header" role="rowgroup">
       <tr>

@@ -1,10 +1,11 @@
+import useUsersContext from '@/hooks/useUsersContext'
 import { useEffect, useRef } from 'react'
 import TRow from './Trow'
-import { Props } from './types'
 
-interface TbodyProps extends Pick<Props, 'users' | 'showingRowColor' | 'deleteUser'> {}
+export default function Tbody() {
+  const { users, activeUser, changeActiveUser, filters, deleteUser } = useUsersContext()
+  const { showRowColor: showingRowColor } = filters
 
-export default function Tbody({ users, showingRowColor, deleteUser }: TbodyProps) {
   const lastUsersCount = useRef(0)
 
   useEffect(() => {
@@ -16,7 +17,15 @@ export default function Tbody({ users, showingRowColor, deleteUser }: TbodyProps
   return (
     <tbody data-testid="table-body" role="rowgroup">
       {users.map((user, i) => (
-        <TRow key={user.login.uuid} user={user} animationDelay={getAnimationDelay(i)} showingRowColor={showingRowColor} deleteUser={deleteUser} />
+        <TRow
+          key={user.login.uuid}
+          user={user}
+          setActiveUser={changeActiveUser}
+          isActive={user.login.uuid === activeUser?.login.uuid}
+          animationDelay={getAnimationDelay(i)}
+          showingRowColor={showingRowColor}
+          deleteUser={deleteUser}
+        />
       ))}
     </tbody>
   )
