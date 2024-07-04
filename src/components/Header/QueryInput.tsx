@@ -1,5 +1,3 @@
-import { withTransition } from '@/utils'
-
 interface Props {
   setCountryQuery: (countryQuery: string) => void
 }
@@ -7,7 +5,7 @@ interface Props {
 export default function QueryInput({ setCountryQuery }: Props) {
   const handleSetCountryQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    withTransition(() => setCountryQuery(value))
+    setCountryQuery(value)
   }
 
   return (

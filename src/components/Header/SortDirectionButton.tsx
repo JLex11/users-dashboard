@@ -1,7 +1,6 @@
 import ArrowShuffleIcon from '@/components/icons/ArrowShuffleIcon'
 import SortIcon from '@/components/icons/SortIcon'
 import { SortDirection, SortField } from '@/enums'
-import { withTransition } from '@/utils'
 import { useRef } from 'react'
 import HeaderButton from './HeaderButton'
 
@@ -18,10 +17,10 @@ export default function SortDirectionButton({ sorting, sortDirection, toggleSort
 
   const handleChangeSortDirection = () => {
     if (sorting === SortField.NONE && previousSorting.current !== null) {
-      withTransition(() => changeSorting(previousSorting.current!))
+      changeSorting(previousSorting.current!)
       return
     }
-    withTransition(() => toggleSortDirection())
+    toggleSortDirection()
   }
 
   return (

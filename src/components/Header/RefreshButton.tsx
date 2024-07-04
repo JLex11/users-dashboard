@@ -1,5 +1,4 @@
 import RefreshIcon from '@/components/icons/RefreshIcon'
-import { withTransition } from '@/utils'
 import clsx from 'clsx'
 import HeaderButton from './HeaderButton'
 
@@ -9,10 +8,8 @@ interface Props {
 }
 
 export default function RefreshButton({ refreshUsers, loading = false }: Props) {
-  const handleRefreshUsers = () => withTransition(() => refreshUsers())
-
   return (
-    <HeaderButton onClick={handleRefreshUsers}>
+    <HeaderButton onClick={refreshUsers}>
       <RefreshIcon className={clsx({ 'animate-spin': loading })} data-testid="refresh-icon" />
     </HeaderButton>
   )

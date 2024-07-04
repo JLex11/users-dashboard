@@ -1,4 +1,3 @@
-import { withTransition } from '@/utils'
 import clsx from 'clsx'
 
 interface Props {
@@ -8,12 +7,8 @@ interface Props {
 }
 
 export default function SortableField({ isActive = false, handleClick, children }: Props) {
-  const handleChangeSort = () => {
-    withTransition(() => handleClick())
-  }
-
   return (
-    <th className="w-1/4 border-b pb-1 pt-0 dark:border-white/15" onClick={() => handleChangeSort()}>
+    <th className="w-1/4 border-b pb-1 pt-0 dark:border-white/15" onClick={handleClick}>
       <button
         data-sorting-field={isActive ? 'active' : ''}
         className={clsx(

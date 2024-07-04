@@ -1,6 +1,6 @@
 import { SortDirection, SortField } from '@/enums'
 import { User } from '@/types.d'
-import { matchSort } from '@/utils'
+import { matchSort, withTransition } from '@/utils'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -19,6 +19,7 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
   })
 
   const [users, setUsers] = useState<User[]>([])
+  const [activeUser, setActiveUser] = useState<User | null>()
   const [sorting, setSorting] = useState<SortField>(SortField.NONE)
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.ASC)
   const [showRowColor, setShowRowColor] = useState(false)
@@ -36,26 +37,28 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
 
   const deleteUser = (userId: User['login']['uuid']) => {
     const newUsers = users.filter((user) => user.login.uuid !== userId)
-    setUsers(newUsers)
+    withTransition(() => setUsers(newUsers))
     deletedUsersIds.current.push(userId)
   }
 
   const changeSorting = (sorting: SortField) => {
-    setSorting((prevSorting) => (prevSorting === sorting ? SortField.NONE : sorting))
+    withTransition(() => setSorting((prevSorting) => (prevSorting === sorting ? SortField.NONE : sorting)))
   }
 
   const toggleSortDirection = () => {
-    setSortDirection((prevSortDirection) => (prevSortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC))
+    withTransition(() => setSortDirection((prevSortDirection) => (prevSortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC)))
   }
 
   const restoreUsers = () => {
-    setUsers(originalUsers.current)
+    withTransition(() => setUsers(originalUsers.current))
     deletedUsersIds.current = []
   }
 
   const changeCountryQuery = (countryQuery: string) => {
-    setCountryQuery(countryQuery)
-    setCurrentPage(0)
+    withTransition(() => {
+      setCountryQuery(countryQuery)
+      setCurrentPage(0)
+    })
   }
 
   const filteredUsers = useMemo(() => {
@@ -73,13 +76,20 @@ export const useUsers = ({ usersFn, usersPerPage = 10 }: Props) => {
     if (pageLimit - pageOffset < usersPerPage - currentPage * usersPerPage) return fetchNextPage()
     if (totalPages === page) {
       await fetchNextPage()
-      return setCurrentPage(page)
+      return withTransition(() => setCurrentPage(page))
     }
-    setCurrentPage(page)
+    withTransition(() => setCurrentPage(page))
+  }
+
+  const changeActiveUser = (user: User | null) => {
+    if (activeUser?.login.uuid === user?.login.uuid) return
+    withTransition(() => setActiveUser(user))
   }
 
   return {
     users: sortedUsers.slice(pageOffset, pageLimit),
+    activeUser,
+    changeActiveUser,
     totalUsers: filteredUsers.length,
     pagination: {
       totalPages,
