@@ -10,17 +10,30 @@ interface TrowProps extends Pick<Props, 'showingRowColor' | 'deleteUser'> {
 }
 
 export default function TRow({ user, setActiveUser, showingRowColor, deleteUser, animationDelay, isActive }: TrowProps) {
+  const handleClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
+    const target = e.target as HTMLElement
+    if (target.dataset.type === 'delete-user') {
+      return deleteUser(user.login.uuid)
+    }
+    setActiveUser(user)
+  }
+
+  const styles = {
+    viewTransitionName: `table-row-${user.login.uuid}`,
+    animationDelay: `${animationDelay}s`
+  } as React.CSSProperties
+
   return (
     <tr
       key={user.login.uuid}
-      style={{ viewTransitionName: `table-row-${user.login.uuid}`, animationDelay: `${animationDelay}s` }}
+      style={styles}
       role="row"
       className={clsx(
         'animate-appear opacity-0 transition-colors hover:cursor-pointer hover:bg-black/5 dark:hover:bg-white/5',
         showingRowColor && 'even:bg-black/[0.025] dark:even:bg-white/[0.025]',
         isActive && 'bg-blue-500 text-white hover:cursor-default hover:bg-blue-600 dark:hover:bg-blue-400'
       )}
-      onClick={() => setActiveUser(user)}
+      onClick={handleClick}
     >
       <td className="rounded-l p-2 transition-colors">
         <img
@@ -40,7 +53,7 @@ export default function TRow({ user, setActiveUser, showingRowColor, deleteUser,
         <button
           className="rounded bg-black/5 px-2 py-1 transition-colors hover:bg-red-700 hover:text-white dark:bg-white/5 dark:text-white"
           role="button"
-          onClick={() => deleteUser(user.login.uuid)}
+          data-type="delete-user"
         >
           Eliminar
         </button>
