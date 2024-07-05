@@ -59,7 +59,7 @@ header::after {
 }
 @keyframes header-after-appear {
   to {
-    @apply gradient-mask-b-0 h-full opacity-100;
+    @apply h-full opacity-100 gradient-mask-b-0;
   }
 }
 
