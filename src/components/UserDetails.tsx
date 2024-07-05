@@ -21,7 +21,7 @@ enum WindowPositions {
 }
 
 export default function UserDetails() {
-  const [windowPos, setWindowPos] = useState<WindowPositions>(WindowPositions.BOTTOMLEFT)
+  const [windowPos, setWindowPos] = useState<WindowPositions>(WindowPositions.CENTER)
   const { activeUser: user, changeActiveUser } = useUsersContext()
   if (!user) return null
 
