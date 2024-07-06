@@ -1,43 +1,80 @@
 import useUsersContext from '@/hooks/useUsersContext'
 import { withTransition } from '@/utils'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import ArrowLeftIcon from './icons/ArrowLeftIcon'
 import CloseIcon from './icons/CloseIcon'
 import EmailIcon from './icons/EmailIcon'
+import FoldDownIcon from './icons/FoldDownIcon'
+import FoldUpIcon from './icons/FoldUpIcon'
 import MapIcon from './icons/MapIcon'
 import PhoneIcon from './icons/PhoneIcon'
+import PointIcon from './icons/PointIcon'
 
-enum WindowPositions {
-  TOP = 'top-[0.7rem]',
-  BOTTOM = 'bottom-[0.7rem]',
-  LEFT = 'left-[0.7rem]',
-  RIGHT = 'right-[0.7rem]',
-  TOPLEFT = 'top-[0.7rem] left-[0.7rem]',
-  TOPRIGHT = 'top-[0.7rem] right-[0.7rem]',
-  BOTTOMLEFT = 'bottom-[0.7rem] left-[0.7rem]',
-  BOTTOMRIGHT = 'bottom-[0.7rem] right-[0.7rem]',
-  CENTER = 'inset-0 m-auto'
+const windowPositions = {
+  BOTTOMLEFT: {
+    label: 'bottom left',
+    positionStyles: 'bottom-[0.7rem] left-[0.7rem] mb-0 ml-0',
+    iconRotation: '-rotate-45'
+  },
+  BOTTOMRIGHT: {
+    label: 'bottom right',
+    positionStyles: 'bottom-[0.7rem] right-[0.7rem] mt-0 mr-0',
+    iconRotation: 'rotate-[225deg]'
+  },
+  TOPLEFT: {
+    label: 'top left',
+    positionStyles: 'top-[0.7rem] left-[0.7rem] mt-0 ml-0',
+    iconRotation: 'rotate-45'
+  },
+  TOPRIGHT: {
+    label: 'top right',
+    positionStyles: 'top-[0.7rem] right-[0.7rem] mt-0 mr-0',
+    iconRotation: 'rotate-[135deg]'
+  },
+  CENTER: {
+    label: 'center',
+    positionStyles: 'inset-0 m-auto',
+    iconRotation: undefined
+  }
 }
 
+type WindowPositions = keyof typeof windowPositions
+
 export default function UserDetails() {
-  const [windowPos, setWindowPos] = useState<WindowPositions>(WindowPositions.CENTER)
+  const [windowPos, setWindowPos] = useState<WindowPositions>('CENTER')
+  const [isOpenSelector, setIsOpenSelector] = useState(false)
+
   const { activeUser: user, changeActiveUser } = useUsersContext()
+  const lastWindowPos = useRef<WindowPositions>('BOTTOMLEFT')
   if (!user) return null
 
   const closeDialog = () => changeActiveUser(null)
+
   const toggleWindowPos = () => {
-    withTransition(() => {
-      setWindowPos(windowPos === WindowPositions.BOTTOMLEFT ? WindowPositions.CENTER : WindowPositions.BOTTOMLEFT)
-    })
+    if (lastWindowPos.current === windowPos) return
+    setIsOpenSelector(false)
+
+    const newPos = lastWindowPos.current
+    lastWindowPos.current = windowPos
+    withTransition(() => setWindowPos(newPos))
   }
+
+  const changeWindowPos = (newPos: WindowPositions) => {
+    lastWindowPos.current = windowPos
+    setIsOpenSelector(false)
+
+    withTransition(() => setWindowPos(newPos))
+  }
+
+  const toggleSelector = () => setIsOpenSelector(!isOpenSelector)
 
   return (
     <dialog
       open
       className={clsx(
-        'fixed m-0 rounded-lg border border-black/10 bg-white/80 shadow-xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-[#242424]/70 dark:shadow-black/25',
-        windowPos
+        'fixed rounded-lg border border-black/10 bg-white/80 shadow-xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-[#242424]/70 dark:shadow-black/25',
+        windowPositions[windowPos].positionStyles
       )}
       style={{ viewTransitionName: `user-details-dialog` }}
     >
@@ -55,15 +92,42 @@ export default function UserDetails() {
             className="group flex aspect-square size-5 rounded-full border-[1px] border-[#febb40] bg-[#dea031] text-black/40"
             onClick={toggleWindowPos}
           >
-            <ArrowLeftIcon
-              className={clsx(
-                'size-5 opacity-0 transition-opacity group-hover:opacity-100',
-                windowPos === WindowPositions.BOTTOMLEFT ? 'rotate-[135deg]' : '-rotate-45'
-              )}
-              strokeWidth={1.5}
-            />
+            {windowPositions[lastWindowPos.current]?.iconRotation ? (
+              <ArrowLeftIcon
+                className={clsx('size-5 opacity-0 transition-opacity group-hover:opacity-100', windowPositions[lastWindowPos.current].iconRotation)}
+                strokeWidth={1.5}
+              />
+            ) : (
+              <PointIcon className="size-5 opacity-0 transition-opacity group-hover:opacity-100" />
+            )}
+          </button>
+          <button
+            type="button"
+            className="group flex aspect-square size-5 rounded-full border-[1px] border-[#32a730] bg-[#33c848] text-black/40"
+            onClick={toggleSelector}
+          >
+            {isOpenSelector ? (
+              <FoldUpIcon className="size-5 opacity-0 transition-opacity group-hover:opacity-100" />
+            ) : (
+              <FoldDownIcon className="size-5 opacity-0 transition-opacity group-hover:opacity-100" />
+            )}
           </button>
         </div>
+        {isOpenSelector && (
+          <div className="absolute left-16 top-8 z-10 size-fit rounded-lg border border-black/5 bg-white/90 p-1 shadow shadow-black/20 backdrop-blur-md dark:border-white/5 dark:bg-[#303030] dark:shadow-black/50">
+            <ul className="flex flex-col">
+              {Object.entries(windowPositions).map(([key, { label, iconRotation }]) => (
+                <li
+                  key={key}
+                  className={`flex w-full cursor-pointer items-center gap-2 rounded p-1 px-2 hover:bg-blue-700 hover:text-white`}
+                  onClick={() => changeWindowPos(key as WindowPositions)}
+                >
+                  {iconRotation ? <ArrowLeftIcon className={`size-5 ${iconRotation}`} /> : <PointIcon className="size-5" />} Move to {label}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <aside>
           <img
             src={user.picture.large}

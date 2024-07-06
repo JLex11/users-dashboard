@@ -75,5 +75,5 @@ header::after {
 }
 
 ::view-transition-group(user-details-dialog) {
-  @apply fixed;
+  @apply fixed z-10;
 }
